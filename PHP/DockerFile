@@ -1,0 +1,20 @@
+# Base image
+FROM php:7.4-apache
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install zip
+
+# Copy application code
+COPY . .
+
+# Expose port
+EXPOSE 80
+
+# Start Apache server
+CMD ["apache2-foreground"]
